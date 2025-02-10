@@ -1,22 +1,3 @@
-<?php
-// Function to get supported image files
-function getImages($directory) {
-    $allowedTypes = array('jpg', 'jpeg', 'png', 'gif');
-    $files = array();
-    
-    if (is_dir($directory)) {
-        $dirContent = scandir($directory);
-        foreach ($dirContent as $file) {
-            $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-            if (in_array($extension, $allowedTypes)) {
-                $files[] = $file;
-            }
-        }
-    }
-    return $files;
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -132,8 +113,8 @@ function getImages($directory) {
         <div class="gallery">
             <?php
             // Specify your images directory
-            $imageDirectory = 'images/';
-            $images = getImages($imageDirectory);
+            //$imageDirectory = 'images/';
+            //$images = getImages($imageDirectory);
 
             foreach ($images as $image) {
                 echo '<div class="gallery-item" onclick="openLightbox(\'' . $imageDirectory . $image . '\')">';

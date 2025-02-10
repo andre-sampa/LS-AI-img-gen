@@ -1,7 +1,7 @@
 <?php
-    include 'functions.php';
+    include 'gallery_functions.php';
     $imageDirectory = 'images/';
-    $imageOrder = 'desc';
+    $imageOrder = 'asc';
     $images = getImages($imageDirectory, $imageOrder); // 'asc' or 'desc'
     include 'gallery_content.php';
 
