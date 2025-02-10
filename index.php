@@ -12,6 +12,8 @@ function getImages($directory) {
                 $files[] = $file;
             }
         }
+        // Sort files in reverse order
+        rsort($files);
     }
     return $files;
 }

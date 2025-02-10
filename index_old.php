@@ -57,6 +57,7 @@ function getImages($directory) {
             background-color: #2d2d2d;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
             transition: transform 0.3s ease;
+            cursor: pointer;
         }
 
         .gallery-item:hover {
@@ -78,6 +79,46 @@ function getImages($directory) {
             text-align: center;
         }
 
+        /* Lightbox styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .close-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            color: #ffffff;
+            font-size: 30px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 10px;
+            z-index: 1001;
+        }
+
         @media (max-width: 768px) {
             .gallery {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -87,7 +128,7 @@ function getImages($directory) {
 </head>
 <body>
     <div class="gallery-container">
-        <h1>========== LS-AI-img-gen - Image Gallery ==========</h1>
+    <h1>========== LS-AI-img-gen - Image Gallery ==========</h1>
         <div class="gallery">
             <?php
             // Specify your images directory
@@ -95,7 +136,7 @@ function getImages($directory) {
             $images = getImages($imageDirectory);
 
             foreach ($images as $image) {
-                echo '<div class="gallery-item">';
+                echo '<div class="gallery-item" onclick="openLightbox(\'' . $imageDirectory . $image . '\')">';
                 echo '<img src="' . $imageDirectory . $image . '" alt="' . pathinfo($image, PATHINFO_FILENAME) . '">';
                 echo '<div class="image-caption">' . pathinfo($image, PATHINFO_FILENAME) . '</div>';
                 echo '</div>';
@@ -107,5 +148,41 @@ function getImages($directory) {
             ?>
         </div>
     </div>
+
+    <!-- Lightbox container -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <button class="close-button" onclick="closeLightbox()">&times;</button>
+        <img id="lightbox-img" src="" alt="Lightbox image">
+    </div>
+
+    <script>
+        function openLightbox(imageSrc) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = imageSrc;
+            lightbox.classList.add('active');
+            // Prevent scrolling when lightbox is open
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            // Restore scrolling
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close lightbox with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+
+        // Prevent lightbox from closing when clicking on the image
+        document.getElementById('lightbox-img').addEventListener('click', function(event) {
+            event.stopPropagation();
+        });
+    </script>
 </body>
 </html>
