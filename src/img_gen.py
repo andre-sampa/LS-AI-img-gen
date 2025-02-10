@@ -30,9 +30,9 @@ def generate_image(
 
     # Append the custom character (if provided)
     if characer_dropdown == "Wizard":
-        prompt += f" A fantasy wizard figths against the {prompt_alias}"
+        prompt += f" A wizard figths against the {prompt_alias}"
     elif characer_dropdown == "Warrior":
-        prompt += f" A fantasy warrior figths against the {prompt_alias}"
+        prompt += f" A warrior figths against the {prompt_alias}"
     else:
         pass
 
