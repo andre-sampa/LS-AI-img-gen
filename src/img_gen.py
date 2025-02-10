@@ -30,9 +30,9 @@ def generate_image(
 
     # Append the custom character (if provided)
     if characer_dropdown == "Wizard":
-        prompt += f" A human wizard combat against the {prompt_alias}"
+        prompt += f" A wizard combat using magic against the {prompt_alias}"
     elif characer_dropdown == "Warrior":
-        prompt += f" A human warrior figths against the {prompt_alias}"
+        prompt += f" A human warrior with his weapon figths against the {prompt_alias}"
     else:
         pass
 
@@ -85,7 +85,7 @@ def generate_image(
     path = "images"
     
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_filename = f"{path}/{timestamp}_{model_alias.replace(' ', '_').lower()}_{prompt_alias.replace(' ', '_').lower()}_{characer_dropdown.replace(' ', '_').lower()}.png"
+    output_filename = f"{path}/{timestamp}_{seed}_{model_alias.replace(' ', '_').lower()}_{prompt_alias.replace(' ', '_').lower()}_{characer_dropdown.replace(' ', '_').lower()}.png"
     try:
         image.save(output_filename)
     except Exception as e:
