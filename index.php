@@ -126,7 +126,7 @@ function getImages($directory) {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             }
         }
-    </style>aa
+    </style>aajhgkjgkjhg
 </head>
 <body>
     <div class="gallery-container">
