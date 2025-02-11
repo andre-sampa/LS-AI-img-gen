@@ -30,9 +30,9 @@ def generate_image(
 
     # Append the custom character (if provided)
     if characer_dropdown == "Wizard":
-        prompt += f" A wizard combat using magic against the {prompt_alias}"
+        prompt += f" A wizard combats using powerful magic against the {prompt_alias}"
     elif characer_dropdown == "Warrior":
-        prompt += f" A human warrior with his weapon figths against the {prompt_alias}"
+        prompt += f" A warrior combats using his weapons against the {prompt_alias}"
     else:
         pass
 

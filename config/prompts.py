@@ -13,7 +13,7 @@ prompts = [
     },
     {
       "alias": "Pixie",
-      "text": "A tiny, mischievous pixie with translucent wings shimmering like stained glass. Its glowing blue eyes and pointed ears give it an otherworldly appearance. It hovers in the air, surrounded by a faint magical aura. Unreal Engine render style, photorealistic, realistic fantasy style."
+      "text": "A tiny, mischievous evil pixie with translucent wings shimmering like stained glass. Its glowing blue eyes and pointed ears give it an otherworldly appearance. It hovers in the air, surrounded by a faint magical aura. Unreal Engine render style, photorealistic, realistic fantasy style."
     },
     {
       "alias": "Wolf",

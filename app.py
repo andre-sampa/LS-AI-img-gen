@@ -6,14 +6,11 @@ from src.img_gen import generate_image
 # Gradio Interface
 def gradio_interface():
     with gr.Blocks(css="""
-                   
                     .gradio-container {
                         background-image: url(''); 
                         background-size: cover;
                         background-position: center;
-
                     }
-
                     .output-image img {
                      width: 2500px; /* Force image to fill container width */
                      object-fit: cover; /* ACTIVATE FOR IMAGE-FIT CONTAINER */
@@ -22,7 +19,7 @@ def gradio_interface():
         gr.Markdown("# ========== Loot Survivor - AI Image Generator ==========")
         with gr.Row():
             # Set default values for dropdowns
-            prompt_dropdown = gr.Dropdown(choices=[p["alias"] for p in prompts], label="Select Prompt", value=prompts[0]["alias"])
+            prompt_dropdown = gr.Dropdown(choices=[p["alias"] for p in prompts], label="Select Beast", value=prompts[0]["alias"])
             character_dropdown = gr.Dropdown(choices=["Beast only", "Wizard", "Warrior"], label="Select Character", value="Beast only")
             model_dropdown = gr.Dropdown(choices=[m["alias"] for m in models], label="Select Model", value=models[0]["alias"])
         with gr.Row():
