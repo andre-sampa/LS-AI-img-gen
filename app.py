@@ -21,7 +21,7 @@ def gradio_interface():
         gr.Markdown("# ========== Loot Survivor - AI Image Generator ==========")
         with gr.Row():
             # Set default values for dropdowns
-            prompt_dropdown = gr.Dropdown(choices=[p["alias"] for p in prompts], label="Select Beast", value=prompts[0]["alias"])
+            #prompt_dropdown = gr.Dropdown(choices=[p["alias"] for p in prompts], label="Select Beast", value=prompts[0]["alias"])
             adventurer_id = gr.Number(label="Adventurer ID:")
             character_dropdown = gr.Dropdown(choices=["Portait", "Last battle", "Loot bag"], label="Select Scene", value="Portait")
             model_dropdown = gr.Dropdown(choices=[m["alias"] for m in models], label="Select Model", value=models[0]["alias"])
@@ -39,7 +39,7 @@ def gradio_interface():
         generate_button.click(
             generate_image,
             inputs=[adventurer_id,
-                    prompt_dropdown, 
+                    #prompt_dropdown, 
                     custom_prompt_input,
                     character_dropdown,
                     model_dropdown
