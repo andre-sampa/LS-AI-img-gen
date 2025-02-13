@@ -1,0 +1,34 @@
+{
+    "data": {
+        "adventurers": [
+            {
+                "owner": "0x62f0ca21835f5fb7470f80eaee41dcf29f7989e14607f023f390fcfb864bc7c",
+                "id": 450,
+                "name": "Realms #5656",
+                "strength": 1,
+                "vitality": 6,
+                "dexterity": 4,
+                "intelligence": 1,
+                "wisdom": 2,
+                "charisma": 7,
+                "level": 13,
+                "xp": 175,
+                "health": 0,
+                "beastHealth": 0,
+                "head": "Leather Cap",
+                "hand": "Hard Leather Gloves",
+                "chest": "Hard Leather Armor",
+                "waist": "Hard Leather Belt",
+                "foot": "Linen Shoes",
+                "weapon": "Quarterstaff",
+                "gold": 0,
+                "neck": null,
+                "ring": null,
+                "luck": 2,
+                "battleActionCount": 0,
+                "customRenderer": null,
+                "statUpgrades": 0
+            }
+        ]
+    }
+}

@@ -4,9 +4,12 @@ import os
 import random
 from huggingface_hub import InferenceClient, login
 from datetime import datetime
-from config.config import models, prompts, api_token  # Direct import
+from config.config import prompts, api_token  
+from config.models import models
+from metadata.metadata import fetch_metadata
 
 def generate_image(
+        adventurer_id,
         prompt_alias, 
         custom_prompt, 
         characer_dropdown,
@@ -16,9 +19,27 @@ def generate_image(
         num_inference_steps=20, 
         guidance_scale=2.0, 
         seed=-1):
+    
+    adventurer = fetch_metadata(adventurer_id)
+    print(f"ANDRE {adventurer['name']}")
+
+    # Set the custom prompt variables
+    if characer_dropdown == "Portait":
+        prompt = f"A portait of a medieval, fantasy adventurer, equiped with a weapon: a {adventurer['weapon']} (depending on his weapon, make the characer dressed as a warrior, or as a hunter or as a wizard). He is also equiped in the head with a {adventurer['head']}, the hands with {adventurer['hand']}, the chest with a {adventurer['chest']}, and the waist with a {adventurer['waist']}. Please be sure to use only medieval items that were possble to be made in that period. Unreal Engine render style, photorealistic, atmospheric light, realistic fantasy style."
+    
+    if characer_dropdown == "Last battle":
+        prompt = f"A battle between a medieval fantasy adventurer, and a big {adventurer['beast']} monster. The adventurer is combating with {adventurer['weapon']} (depending on his equipment, make the characer dressed as a warrior, or as a hunter or as a wizard). He is also equiped in the head with {adventurer['head']}, the hands with {adventurer['hand']}, the chest with {adventurer['chest']}, the waist with {adventurer['waist']}, the fet with {adventurer['foot']}. Please sure to use only medieval items that were possble to be made in that period. Add details for the monster as well. is Unreal Engine render style, photorealistic, realistic fantasy style."
+
+    elif characer_dropdown == "Loot bag":
+        prompt = f"A loot bag from a medieval fantasy adventurer and his equipments. On the floor also a {adventurer['weapon']} a {adventurer['head']}, a {adventurer['hand']}, a {adventurer['chest']}, a {adventurer['waist']}, and a {adventurer['foot']}. Please sure to use only medieval items that were possble to be made in that period. Inside the bag also gold coins. Atmospheric light, cavern, dungeon context. Unreal Engine render style, photorealistic, realistic fantasy style."
+    else:       
+        pass
+
+
+
     # Find the selected prompt and model
     try:
-        prompt = next(p for p in prompts if p["alias"] == prompt_alias)["text"]
+        #prompt = next(p for p in prompts if p["alias"] == prompt_alias)["text"]
         model_name = next(m for m in models if m["alias"] == model_alias)["name"]
 
     except StopIteration:
@@ -28,13 +49,6 @@ def generate_image(
     print("Original Prompt:")
     print(prompt)
 
-    # Append the custom character (if provided)
-    if characer_dropdown == "Wizard":
-        prompt += f" A wizard combats using powerful magic against the {prompt_alias}"
-    elif characer_dropdown == "Warrior":
-        prompt += f" A warrior combats using his weapons against the {prompt_alias}"
-    else:
-        pass
 
    # Append the custom prompt (if provided)
     if custom_prompt and len(custom_prompt.strip()) > 0:
@@ -84,8 +98,11 @@ def generate_image(
     print("-----SAVING-----", image)
     path = "images"
     
+    message = f"Image generated successfully! Call the banners! \nID: {adventurer['id']}, NAME: {adventurer['name']}, WEAPON: {adventurer['weapon']}, HEAD: {adventurer['head']}, HAND: {adventurer['hand']}, CHEST: {adventurer['chest']}, WAIST: {adventurer['waist']}, BEAST: {adventurer['beast']}"
+    file_name_extension = f"ID: {adventurer['id']}, NAME: {adventurer['name']}, WEAPON: {adventurer['weapon']}, HEAD: {adventurer['head']}, HAND: {adventurer['hand']}, CHEST: {adventurer['chest']}, WAIST: {adventurer['waist']}, BEAST: {adventurer['beast']}"
+
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_filename = f"{path}/{timestamp}_{seed}_{model_alias.replace(' ', '_').lower()}_{prompt_alias.replace(' ', '_').lower()}_{characer_dropdown.replace(' ', '_').lower()}.png"
+    output_filename = f"{path}/{timestamp}_{seed}_{model_alias.replace(' ', '_').lower()}_{prompt_alias.replace(' ', '_').lower()}_{characer_dropdown.replace(' ', '_').lower()}_{file_name_extension.replace(' ', '_').lower()}.png"
     try:
         image.save(output_filename)
     except Exception as e:
@@ -93,4 +110,4 @@ def generate_image(
     print("-----DONE!-----")
     print("-----CALL THE BANNERS!-----")
 
-    return output_filename, "Image generated successfully!"
+    return output_filename, message
