@@ -2,8 +2,7 @@
 import modal
 import random
 import io
-from config.config import api_token 
-from config.prompts import prompts
+from config.config import prompts, api_token 
 from config.models import models_modal
 import os
 import gradio as gr
@@ -20,8 +19,6 @@ from diffusers import DPMSolverMultistepScheduler, StableDiffusionPipeline, Auto
 from PIL import Image
 from src.check_dependecies import check_dependencies
 import numpy as np
-from src.prompt_gen import prompt_gen
-
 
 MAX_SEED = np.iinfo(np.int32).max
 MAX_IMAGE_SIZE = 2048
@@ -62,12 +59,10 @@ flux_model_vol = modal.Volume.from_name("flux-model-vol", create_if_missing=True
               )
 # MAIN GENERATE IMAGE FUNCTION
 def generate_image_gpu(
-        adventurer_id,
-        #prompt_alias, 
-        #character_dropdown,
-        scene_dropdown,
-        #model_alias,
+        prompt_alias, 
         custom_prompt, 
+        characer_dropdown,
+        model_alias, 
         height=360, 
         width=640, 
         num_inference_steps=20, 
@@ -76,44 +71,26 @@ def generate_image_gpu(
     # Find the selected prompt and model
     print("Hello from LS_img_gen!")
 
-    #check_dependencies()
+    check_dependencies()
 
-    print ("Sending to prompt gen")
-    adventurer, prompt = prompt_gen(adventurer_id, scene_dropdown)
-    
+    try:
+        prompt = next(p for p in prompts if p["alias"] == prompt_alias)["text"]
+        model_name = next(m for m in models_modal if m["alias"] == model_alias)["name"]
+
+    except StopIteration:
+        return None, "ERROR: Invalid prompt or model selected."
+
     # Print the original prompt and dynamic values for debugging
     print("Original Prompt:")
     print(prompt)
 
-    print("Defining advanturer variables")
-    id = adventurer['id']
-    name = adventurer['name']
-    weapon_equipment = adventurer['weapon']
-    head_equipment = adventurer['head']
-    hand_equipment = adventurer['hand']
-    chest_equipment = adventurer['chest']
-    waist_equipment = adventurer['waist']
-    foot_equipment = adventurer['foot']
-    gold_equipment = adventurer['gold']
-    beast_last_battle = adventurer['beast']
-
-    print("Loading Model")
-    model_alias = "FLUX.1-dev"
-    try:
-        #prompt = next(p for p in prompts if p["alias"] == prompt_alias)["text"]
-        #model_name = next(m for m in models_modal if m["alias"] == model_alias)["name"]
-        model_name = model_alias
-    except StopIteration:
-        return None, "ERROR: Invalid prompt or model selected."
-
-
-    # # Append the custom character (if provided)
-    # if character_dropdown == "Wizard":
-    #     prompt += f" A wizard combats using powerful magic against the {beast_last_battle}"
-    # elif character_dropdown == "Warrior":
-    #     prompt += f" A warrior combats using his weapons against the {beast_last_battle}"
-    # else:
-    #     pass
+    # Append the custom character (if provided)
+    if characer_dropdown == "Wizard":
+        prompt += f" A wizard combats using powerful magic against the {prompt_alias}"
+    elif characer_dropdown == "Warrior":
+        prompt += f" A warrior combats using his weapons against the {prompt_alias}"
+    else:
+        pass
 
    # Append the custom prompt (if provided)
     if custom_prompt and len(custom_prompt.strip()) > 0:
@@ -165,12 +142,9 @@ def generate_image_gpu(
             #torch_dtype=torch.float16,
             #torch_dtype=torch.float32,
             #vae=taef1,
-            local_files_only=False,
+            local_files_only=True,
         )
         #torch.cuda.empty_cache()
-
-        if model_alias == "Flux-Midjourney-Mix2-LoRA":
-            pipe.load_lora_weights("/data/Flux-Midjourney-Mix2-LoRA")
 
         if torch.cuda.is_available():
             print("CUDA available")
@@ -216,13 +190,8 @@ def generate_image_gpu(
         # Save the image with a timestamped filename
         print("-----SAVING-----", image)
 
-        message = f"Image generated successfully! Call the banners! \n\n=====ADVENTURER GENERATED===== \nID: {id}\nNAME: {name}\nWEAPON: {weapon_equipment}\nHEAD: {head_equipment}\nHAND: {hand_equipment}\nCHEST: {chest_equipment}\nWAIST: {waist_equipment}\nFOOT: {foot_equipment}\nGOLD: {gold_equipment}\nLAST BATTLE BEAST: {beast_last_battle}"
-
-        file_name_extension = f"{id}_{beast_last_battle.replace(' ', '_').lower()}"
-
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        
-        output_filename = f"/data/LS_images/{timestamp}_{seed}_{model_alias.replace(' ', '_').lower()}_{scene_dropdown.replace(' ', '_').lower()}_{file_name_extension.replace(' ', '_').lower()}.png"
+        output_filename = f"/data/LS_images/{timestamp}_{seed}_{model_alias.replace(' ', '_').lower()}_{prompt_alias.replace(' ', '_').lower()}_{characer_dropdown.replace(' ', '_').lower()}.png"
         try:
             image.save(output_filename)
         except Exception as e:
@@ -232,6 +201,5 @@ def generate_image_gpu(
 
     except Exception as e:
         print(f"ERROR: Failed to save image. Details: {e}")
-
     # Return the filename and success message
-    return image, message
+    return image, "Image generated successfully!"

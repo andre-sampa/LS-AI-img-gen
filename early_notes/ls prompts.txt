@@ -1,0 +1,2 @@
+
+help me create a prompt for img gen . it must be a good generic prompt because i will make it dynamicaly changing a variable. The imgs are about some beasts, or monsters, that are part of a fantasy / magical / medieval world. So lets say i will have a list of spider, wolf, bear, etc. And I need a generic prompt like: A massive VARIABLE monster. and then i will dynamicaly change VARIABLE to the monster i need. Make the promot 250 tokns length, and add light details for a realistic but also exciting scene

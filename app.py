@@ -1,5 +1,6 @@
 # app.py 
-from config.config import prompts, api_token  # Direct import
+# venv w python3.11 
+from config.config import api_token  # Direct import
 from config.models import models
 import gradio as gr
 from src.img_gen import generate_image
@@ -23,12 +24,12 @@ def gradio_interface():
             # Set default values for dropdowns
             #prompt_dropdown = gr.Dropdown(choices=[p["alias"] for p in prompts], label="Select Beast", value=prompts[0]["alias"])
             adventurer_id = gr.Number(label="Adventurer ID:")
-            character_dropdown = gr.Dropdown(choices=["Portait", "Last battle", "Loot bag"], label="Select Scene", value="Portait")
-            model_dropdown = gr.Dropdown(choices=[m["alias"] for m in models], label="Select Model", value=models[0]["alias"])
+            #character_dropdown = gr.Dropdown(choices=["Wizard", "Hunter", "Warrior"], label="Select Character Type", value="Wizard")
+            scene_dropdown = gr.Dropdown(choices=["Adventurer Portait", "Beast Portait", "Last Battle", "Loot Bag"], label="Select Scene", value="Adventurer Portait")          
+            #model_dropdown = gr.Dropdown(choices=[m["alias"] for m in models], label="Select Model", value=models[0]["alias"])
         with gr.Row():
             # Add a text box for custom user input (max 200 characters)
             custom_prompt_input = gr.Textbox(label="Custom Prompt (Optional)", placeholder="Enter additional details (max 200 chars)...", max_lines=1, max_length=200)
-            #custom_prompt_input = f""
         with gr.Row():
             generate_button = gr.Button("Generate Image")
         with gr.Row():
@@ -40,9 +41,10 @@ def gradio_interface():
             generate_image,
             inputs=[adventurer_id,
                     #prompt_dropdown, 
+                    #character_dropdown,
+                    scene_dropdown,
+                    #model_dropdown,
                     custom_prompt_input,
-                    character_dropdown,
-                    model_dropdown
                     ],
             outputs=[output_image, status_text]
         )

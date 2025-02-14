@@ -63,8 +63,9 @@ if response.status_code == 200:
     # Print each adventurer's details dynamically
     for adventurer in adventurers:
         # Assign the 'hand' and 'head' fields to variables
-        hand_var = adventurer.get("hand")
-        head_var = adventurer.get("head")
+        
+        head = adventurer.get("head")
+        hand = adventurer.get("hand")
 
         # Print the variables (for debugging)
         print(f"Hand: {hand_var}")
