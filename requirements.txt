@@ -12,3 +12,4 @@ sentencepiece
 opencv-python==4.5.5.64
 gguf
 tensorflow
+modal
