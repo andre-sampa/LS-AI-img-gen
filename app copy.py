@@ -25,7 +25,7 @@ def gradio_interface():
             #prompt_dropdown = gr.Dropdown(choices=[p["alias"] for p in prompts], label="Select Beast", value=prompts[0]["alias"])
             adventurer_id = gr.Number(label="Adventurer ID:")
             #character_dropdown = gr.Dropdown(choices=["Wizard", "Hunter", "Warrior"], label="Select Character Type", value="Wizard")
-            scene_dropdown = gr.Dropdown(choices=["Adventurer Portait", "Encounter", "Beast Portait", "Last Battle", "Loot Bag"], label="Select Scene", value="Adventurer Portait")          
+            scene_dropdown = gr.Dropdown(choices=["Adventurer Portait", "Encounter", "Beast Portait", "Last Battle", "Final Scene"], label="Select Scene", value="Adventurer Portait")          
             #model_dropdown = gr.Dropdown(choices=[m["alias"] for m in models], label="Select Model", value=models[0]["alias"])
         with gr.Row():
             # Add a text box for custom user input (max 200 characters)
@@ -33,10 +33,7 @@ def gradio_interface():
         with gr.Row():
             generate_button = gr.Button("Generate Image")
         with gr.Row():
-            output_image1 = gr.Image(elem_classes="output-image", label="Generated Image", show_label=False, scale=1, width="100%")
-            output_image2 = gr.Image(elem_classes="output-image", label="Generated Image", show_label=False, scale=1, width="100%")
-            output_image3 = gr.Image(elem_classes="output-image", label="Generated Image", show_label=False, scale=1, width="100%")
-            output_image4 = gr.Image(elem_classes="output-image", label="Generated Image", show_label=False, scale=1, width="100%")
+            output_image = gr.Image(elem_classes="output-image", label="Generated Image", show_label=False, scale=1, width="100%")
         with gr.Row():
             status_text = gr.Textbox(label="Status", placeholder="Waiting for input...", interactive=False)
         # Connect the button to the function
@@ -49,7 +46,7 @@ def gradio_interface():
                     #model_dropdown,
                     custom_prompt_input,
                     ],
-            outputs=[output_image1, status_text]
+            outputs=[output_image, status_text]
         )
     return demo
 

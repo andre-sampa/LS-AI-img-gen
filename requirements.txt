@@ -2,7 +2,7 @@ torch
 diffusers
 transformers
 accelerate
-gradio==5.16.0
+gradio
 safetensors
 pillow
 numpy<2

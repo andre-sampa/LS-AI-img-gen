@@ -2,7 +2,7 @@ from metadata.metadata import fetch_metadata
 
 def prompt_gen(adventurer_id, scene_dropdown):
     adventurer = fetch_metadata(adventurer_id)
-    print(f"\nNAME: {adventurer['name']}")
+    print(f"ANDRE {adventurer['name']}")
 
     id = adventurer['id']
     name = adventurer['name']
@@ -13,9 +13,7 @@ def prompt_gen(adventurer_id, scene_dropdown):
     waist_equipment = adventurer['waist']
     foot_equipment = adventurer['foot']
     gold_equipment = adventurer['gold']
-    adventurer_health = adventurer['health']
     beast_last_battle = adventurer['beast']
-    beast_health = adventurer['beastHealth']
 
     # Check for weapon = None to fix eventual generator mistakes
     if weapon_equipment == None:
@@ -84,24 +82,17 @@ def prompt_gen(adventurer_id, scene_dropdown):
     if scene_dropdown == "Adventurer Portait":
         prompt = f"A portrait of a medieval, fantasy adventurer, {equipment_sentence}. All equipment is strictly medieval, crafted from materials and techniques possible in that era. Make the adventurer unshaved and dirty, as if he has been fighting for days down in the dungeons. Torchlit light environment. Foreboding dungeon scene. Unreal Engine render style, photorealistic, atmospheric dark light, realistic fantasy style."
         
-    elif scene_dropdown == "Beast Portait":
+    if scene_dropdown == "Beast Portait":
         prompt = f"A portait of a massive {beast_last_battle} in a dark, foreboding dungeon. Its eyes glow faintly in the dark. It roars menacingly surrounded by broken weapons and bones of his past preys. Torchlit environment, underground dungeon. Unreal Engine render style, photorealistic, atmospheric dark lights, realistic fantasy style."
 
-    elif scene_dropdown == "Encounter":
+    if scene_dropdown == "Encounter":
         prompt = f"A close-up shot of the {beast_last_battle}'s piercing eye, glowing faintly in the dim light of a torchlit dungeon. Intricate details of the beast's scaly or furred skin surround the eye, with faint scars and ancient markings hinting at its long history of battles. Torchlit environment. The atmosphere is tense, with shadows dancing across the dungeon walls and the faint glint of broken weapons and bones scattered nearby. Unreal Engine render style, photorealistic, atmospheric dark lighting, hyper-detailed, realistic fantasy style."
     
-    elif scene_dropdown == "Last Battle":
-        prompt = f"A battle between a medieval fantasy adventurer and a massive {beast_last_battle} deep within the confines of a dark, foreboding dungeon. The adventurer is {equipment_sentence}. All equipment is strictly medieval, crafted from materials and techniques possible in that era. The {beast_last_battle} stands in a dark undergroud dungeon. Its eyes glow faintly in the dark. It roars menacingly, surrounded by broken weapons and bones of his past preys. The adventurer attacks using his {weapon_equipment} and powerful magic, the glow of his spells or the glint of his weapon illuminate the stone walls. The dungeon is dimly lit by flickering torches, their light casting long, ominous shadows across the ancient, cracked floor. Unreal Engine render style, photorealistic, realistic fantasy style."
+    if scene_dropdown == "Last Battle":
+        prompt = f"A battle between a medieval fantasy adventurer and a massive {beast_last_battle} deep within the confines of a dark, foreboding dungeon. The adventurer is {equipment_sentence}. All equipment is strictly medieval, crafted from materials and techniques possible in that era. The {beast_last_battle} stands in a dark undergroud dungeon. Its eyes glow faintly in the dark. It roars menacingly, surrounded by broken weapons and bones of his past preys. The adventurer attacks using his {weapon_equipment} or powerful magic, the glow of his spells or the glint of his weapon illuminating the stone walls. The dungeon is dimly lit by flickering torches, their light casting long, ominous shadows across the ancient, cracked floor. Unreal Engine render style, photorealistic, realistic fantasy style."
 
-    elif scene_dropdown == "Final Scene":
-        print("===FINAL SCENE===")
-        print(f"adv health: {adventurer_health}")
-        if adventurer_health != 0:
-            print("\n=====THE ADVENTURER IS STILL ALIVE2=====")
-            prompt = f"A climactic battle between a medieval fantasy adventurer and a massive {beast_last_battle} deep within the confines of a dark, foreboding dungeon. The adventurer has emerged victorious, standing tall over the slain {beast_last_battle}. The beast lies defeated, its massive form crumpled on the dungeon floor, its faintly glowing eyes dimming as life fades. The adventurer is {equipment_sentence}, their equipment battered but intact, a testament to their skill and resilience. All equipment is strictly medieval, crafted from materials and techniques possible in that era. The scene takes place in a dark underground dungeon, dimly lit by flickering torches. The adventurer's breath is visible in the cold air, their expression a mix of exhaustion and triumph. The dungeon walls are damp and covered in moss, with ancient runes carved into the stone. Unreal Engine render style, photorealistic, realistic fantasy style, highly detailed, cinematic lighting, and atmospheric effects."
-        else:       
-            print("\n=====THE ADVENTURER IS DEAD2=====")
-            prompt = f"Close-up shot of a dramatic battle between a medieval fantasy adventurer and a massive {beast_last_battle} deep within the confines of a dark, foreboding dungeon. The {beast_last_battle} has emerged victorious, standing triumphantly over the fallen adventurer. The adventurer lies defeated, {equipment_sentence}, their equipment shattered and scattered across the dungeon floor. All equipment is strictly medieval, crafted from materials and techniques possible in that era. The scene takes place in a dark underground dungeon, dimly lit by flickering torches. The {beast_last_battle}'s eyes glow faintly in the dark, casting an eerie light. The dungeon walls are damp and covered in moss, with ancient runes carved into the stone. Unreal Engine render style, photorealistic, realistic fantasy style, highly detailed, cinematic lighting, and atmospheric effects."
+    elif scene_dropdown == "Loot Bag":
+        prompt = f"A loot bag from a medieval fantasy adventurer and his equipments. On the floor also a {weapon_equipment} a {head_equipment}, a {hand_equipment}, a {chest_equipment}, a {waist_equipment}, and a {foot_equipment}. All equipment is strictly medieval, crafted from materials and techniques possible in that era. Inside the bag {gold_equipment} gold coins. Atmospheric light, underground dungeon context. Torchlit environment. Unreal Engine render style, photorealistic, realistic fantasy style."
     else:       
         pass
 

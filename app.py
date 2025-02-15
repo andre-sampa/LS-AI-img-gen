@@ -5,6 +5,7 @@ from config.models import models
 import gradio as gr
 from src.img_gen import generate_image
 from metadata.metadata import fetch_metadata
+import time
 
 # Gradio Interface
 def gradio_interface():
@@ -30,7 +31,7 @@ def gradio_interface():
             scene_dropdown2 = gr.Dropdown(choices=["Adventurer Portait", "Encounter", "Beast Portait", "Last Battle", "Loot Bag"], label="Select Scene", value="Beast Portait", visible=False )          
             scene_dropdown3 = gr.Dropdown(choices=["Adventurer Portait", "Encounter", "Beast Portait", "Last Battle", "Loot Bag"], label="Select Scene", value="Encounter", visible=False )          
             scene_dropdown4 = gr.Dropdown(choices=["Adventurer Portait", "Encounter", "Beast Portait", "Last Battle", "Loot Bag"], label="Select Scene", value="Last Battle", visible=False )          
-            scene_dropdown5 = gr.Dropdown(choices=["Adventurer Portait", "Encounter", "Beast Portait", "Last Battle", "Loot Bag"], label="Select Scene", value="Loot Bag", visible=False )          
+            scene_dropdown5 = gr.Dropdown(choices=["Adventurer Portait", "Encounter", "Beast Portait", "Last Battle", "Final Scene"], label="Select Scene", value="Final Scene", visible=False )          
             custom_prompt_input = gr.Textbox(label="Custom Prompt (Optional)", placeholder="Enter additional details (max 200 chars)...", max_lines=1, max_length=200)
             #model_dropdown = gr.Dropdown(choices=[m["alias"] for m in models], label="Select Model", value=models[0]["alias"])
         #with gr.Row():
@@ -43,7 +44,7 @@ def gradio_interface():
         with gr.Row():
             output_image3 = gr.Image(elem_classes="output-image", label="Encounter", show_label=True, scale=1, width="100%")
             output_image4 = gr.Image(elem_classes="output-image", label="Last Battle", show_label=True, scale=1, width="100%")
-            output_image5 = gr.Image(elem_classes="output-image", label="Loot Bag", show_label=True, scale=1, width="100%")
+            output_image5 = gr.Image(elem_classes="output-image", label="Final Scene", show_label=True, scale=1, width="100%")
         
         with gr.Row():
             status_text = gr.Textbox(label="Status", placeholder="Waiting for input...", interactive=False)
