@@ -1,0 +1,15 @@
+torch
+diffusers
+transformers
+accelerate
+gradio==5.16.0
+safetensors
+pillow
+numpy<2
+invisible_watermark
+huggingface_hub[hf_transfer]
+sentencepiece
+opencv-python==4.5.5.64
+gguf
+tensorflow
+modal
