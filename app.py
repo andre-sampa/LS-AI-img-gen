@@ -21,7 +21,7 @@ def gradio_interface():
                      object-fit: cover; /* ACTIVATE FOR IMAGE-FIT CONTAINER */
                     }
                     """) as demo:
-        gr.Markdown("# ========== Loot Survivor - AI Image Generator ==========")
+        gr.Markdown("# ========== Loot Survivor - AI Image Generator ========== CPU")
         with gr.Row():
             # Set default values for dropdowns
             #prompt_dropdown = gr.Dropdown(choices=[p["alias"] for p in prompts], label="Select Beast", value=prompts[0]["alias"])
