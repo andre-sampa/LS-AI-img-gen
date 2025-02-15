@@ -101,7 +101,7 @@ def generate_image(
     
     message = f"Image generated successfully! Call the banners! \n\n=====ADVENTURER GENERATED===== \nID: {id}\nNAME: {name}\nWEAPON: {weapon_equipment}\nHEAD: {head_equipment}\nHAND: {hand_equipment}\nCHEST: {chest_equipment}\nWAIST: {waist_equipment}\nFOOT: {foot_equipment}\nGOLD: {gold_equipment}\nLAST BATTLE BEAST: {beast_last_battle}"
 
-    file_name_extension = f"{id}_{beast_last_battle}"
+    file_name_extension = f"{id}_{weapon_equipment}_{head_equipment}_{hand_equipment}_{chest_equipment}_{waist_equipment}_{foot_equipment}_{gold_equipment}_{beast_last_battle}"
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 

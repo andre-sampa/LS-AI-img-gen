@@ -18,4 +18,6 @@ Dungeon context, stones, fire and low light.
 
 
 keywords:
-- Torchlit environment
+Torchlit environment
+Its eyes glow faintly in the dark
+ The dungeon is dimly lit by flickering torches, their light casting long, ominous shadows across the ancient, cracked floor.

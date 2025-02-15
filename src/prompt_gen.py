@@ -17,7 +17,7 @@ def prompt_gen(adventurer_id, scene_dropdown):
 
     # Check for weapon = None to fix eventual generator mistakes
     if weapon_equipment == None:
-        weapon_sentence = "holding nothing in his hands"
+        weapon_equipment = "barehands"
     else:   
         weapon_sentence = f"holding only a {weapon_equipment}"
     
@@ -26,19 +26,73 @@ def prompt_gen(adventurer_id, scene_dropdown):
     # else:
     #     character_attack_sentence = f"The adventurer is attacking using his {weapon_equipment}"
 
+    # Function to build equipment sentence dynamically
+    def build_equipment_sentence(**equipment):
+        sentences = []
+        
+        # Weapon
+        if equipment.get("weapon_equipment"):
+            sentences.append(f"holding a {equipment['weapon_equipment']}")
+        else:
+            sentences.append("holding nothing in his hands (bare hands)")
+        
+        # Head
+        if equipment.get("head_equipment"):
+            sentences.append(f"wearing a {equipment['head_equipment']} on his head")
+        else:
+            sentences.append("with no head protection (bare head)")
+        
+        # Hands
+        if equipment.get("hand_equipment"):
+            sentences.append(f"wearing {equipment['hand_equipment']} on his hands")
+        else:
+            sentences.append("with no hand protection (bare hands)")
+        
+        # Chest
+        if equipment.get("chest_equipment"):
+            sentences.append(f"wearing a {equipment['chest_equipment']} on his chest")
+        else:
+            sentences.append("with no chest armor (bare chest)")
+        
+        # Waist
+        if equipment.get("waist_equipment"):
+            sentences.append(f"wearing a {equipment['waist_equipment']} around his waist")
+        else:
+            sentences.append("with no waist equipment (bare waist)")
+        
+        # Feet
+        if equipment.get("foot_equipment"):
+            sentences.append(f"wearing {equipment['foot_equipment']} on his feet")
+        else:
+            sentences.append("with no foot protection (bare feet)")
+        
+        return ", ".join(sentences)
+
+    # Example usage
+    equipment_sentence = build_equipment_sentence(
+        weapon_equipment=weapon_equipment,
+        head_equipment=head_equipment,
+        hand_equipment=hand_equipment,
+        chest_equipment=chest_equipment,
+        waist_equipment=waist_equipment,
+        foot_equipment=foot_equipment
+    )
 
     # Set the custom prompt variables
     if scene_dropdown == "Adventurer Portait":
-        prompt = f"A portait of a medieval, fantasy adventurer, {weapon_sentence} (depending on his weapon, make the character dressed as a warrior, or as a hunter or as a wizard). He is also equiped in the head with a {head_equipment}, the hands with {hand_equipment}, the chest with a {chest_equipment}, and the waist with a {waist_equipment}. Please be sure to use only medieval items that were possble to be made in that period. Make the adventurer unshaved and dirty, he have been figthing for days down into the dungeons. Low light environment. Unreal Engine render style, photorealistic, atmospheric dark light, realistic fantasy style."
-
+        prompt = f"A portrait of a medieval, fantasy adventurer, {equipment_sentence}. All equipment is strictly medieval, crafted from materials and techniques possible in that era. Make the adventurer unshaved and dirty, as if he has been fighting for days down in the dungeons. Torchlit light environment. Foreboding dungeon scene. Unreal Engine render style, photorealistic, atmospheric dark light, realistic fantasy style."
+        
     if scene_dropdown == "Beast Portait":
-        prompt = f"A massive {beast_last_battle} stands in its natural domain—a place that reflects its primal essence. The beast's eyes burn with an eerie, intelligent light, and its powerful limbs are poised for action, as if ready to pounce or defend its territory. It roars menacingly surrounded by broken weapons and bones of his past preys. Torchlit environment, underground dungeons, or dense forests, or jagged mountains, or dark caves, or misty damp swamps. Unreal Engine render style, photorealistic, atmospheric dark lights, realistic fantasy style."
+        prompt = f"A portait of a massive {beast_last_battle} in a dark, foreboding dungeon. Its eyes glow faintly in the dark. It roars menacingly surrounded by broken weapons and bones of his past preys. Torchlit environment, underground dungeon. Unreal Engine render style, photorealistic, atmospheric dark lights, realistic fantasy style."
+
+    if scene_dropdown == "Encounter":
+        prompt = f"A close-up shot of the {beast_last_battle}'s piercing eye, glowing faintly in the dim light of a torchlit dungeon. Intricate details of the beast's scaly or furred skin surround the eye, with faint scars and ancient markings hinting at its long history of battles. Torchlit environment. The atmosphere is tense, with shadows dancing across the dungeon walls and the faint glint of broken weapons and bones scattered nearby. Unreal Engine render style, photorealistic, atmospheric dark lighting, hyper-detailed, realistic fantasy style."
     
     if scene_dropdown == "Last Battle":
-        prompt = f"A battle between a medieval fantasy adventurer, and a massive {beast_last_battle}. The adventurer is {weapon_sentence}. He is also equiped in the head with {head_equipment}, the hands with {hand_equipment}, the chest with {chest_equipment}, the waist with {waist_equipment}, the feet with {foot_equipment}. Use only medieval items that were possible to be made in that period. The {beast_last_battle} stands in its natural domain—a place that reflects its primal essence. The beast's eyes burn with an eerie, intelligent light, and its powerful limbs are poised for action, as if ready to pounce or defend its territory. It roars menacingly, surrounded by broken weapons and bones. The adventurer attacks using his {weapon_equipment} or powerful magic. Torchlit environment, underground dungeons, or dense forests, or jagged mountains, or dark caves, or misty damp swamps. Unreal Engine render style, photorealistic, realistic fantasy style."
+        prompt = f"A battle between a medieval fantasy adventurer and a massive {beast_last_battle} deep within the confines of a dark, foreboding dungeon. The adventurer is {equipment_sentence}. All equipment is strictly medieval, crafted from materials and techniques possible in that era. The {beast_last_battle} stands in a dark undergroud dungeon. Its eyes glow faintly in the dark. It roars menacingly, surrounded by broken weapons and bones of his past preys. The adventurer attacks using his {weapon_equipment} or powerful magic, the glow of his spells or the glint of his weapon illuminating the stone walls. The dungeon is dimly lit by flickering torches, their light casting long, ominous shadows across the ancient, cracked floor. Unreal Engine render style, photorealistic, realistic fantasy style."
 
     elif scene_dropdown == "Loot Bag":
-        prompt = f"A loot bag from a medieval fantasy adventurer and his equipments. On the floor also a {weapon_equipment} a {head_equipment}, a {hand_equipment}, a {chest_equipment}, a {waist_equipment}, and a {foot_equipment}. Please sure to use only medieval items that were possble to be made in that period. Inside the bag {gold_equipment} gold coins. Atmospheric light, cavern, dungeon context. Torchlit environment. Unreal Engine render style, photorealistic, realistic fantasy style."
+        prompt = f"A loot bag from a medieval fantasy adventurer and his equipments. On the floor also a {weapon_equipment} a {head_equipment}, a {hand_equipment}, a {chest_equipment}, a {waist_equipment}, and a {foot_equipment}. All equipment is strictly medieval, crafted from materials and techniques possible in that era. Inside the bag {gold_equipment} gold coins. Atmospheric light, underground dungeon context. Torchlit environment. Unreal Engine render style, photorealistic, realistic fantasy style."
     else:       
         pass
 
